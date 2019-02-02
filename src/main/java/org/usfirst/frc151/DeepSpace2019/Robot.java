@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc151.DeepSpace2019.commands.*;
 import org.usfirst.frc151.DeepSpace2019.subsystems.*;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.cscore.*;
 
 
 public class Robot extends TimedRobot {
@@ -19,6 +21,9 @@ public class Robot extends TimedRobot {
     public static Chassis chassis;
     public static Cargo cargo;
     public static Hatch hatch;
+    public static USBCamera usbCam;
+    public static MjpegServer server;
+    public static UsbCamera cam1, cam2;
 
     @Override
     public void robotInit() {
@@ -26,6 +31,11 @@ public class Robot extends TimedRobot {
         chassis = new Chassis();
         cargo = new Cargo();
         hatch = new Hatch();
+        usbCam = new USBCamera();
+        cam1 = CameraServer.getInstance().startAutomaticCapture(0);
+        cam2 = CameraServer.getInstance().startAutomaticCapture(1);
+        server = new MjpegServer("server", 0);
+        server.setSource(cam1);
 
         oi = new OI(0);
 

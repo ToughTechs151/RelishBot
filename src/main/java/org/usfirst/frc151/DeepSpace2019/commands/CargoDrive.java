@@ -7,30 +7,31 @@ import org.usfirst.frc151.DeepSpace2019.Robot;
  */
 public class CargoDrive extends Command {
 
-    private boolean isFinished = false;
 
     public CargoDrive() {
 
         requires(Robot.chassis);
+        requires(Robot.usbCam);
 
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
+        Robot.usbCam.cameraSwitch(Robot.cam1, Robot.server);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
         Robot.chassis.positiveDir();
-        isFinished = true;
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return isFinished;
+        return true;
     }
 
     // Called once after isFinished returns true
