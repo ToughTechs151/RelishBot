@@ -24,6 +24,15 @@ public class Chassis extends Subsystem {
     public static final double TURBO = 0.75;
     public static final double CRAWL = 0.25;
     double direction = 1;
+    private int dir = 1;
+
+    public void positiveDir() {
+        dir = 1;
+    }
+
+    public void negativeDir() {
+        dir = -1;
+    }
 
     public Chassis() {
         frontRight = new Talon(RobotMap.FRONT_RIGHT);
@@ -57,7 +66,7 @@ public class Chassis extends Subsystem {
     public void drive (OI oi) {
         double rightVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_VERTICAL_AXIS));
         double leftVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_VERTICAL_AXIS));
-        drive(leftVal * speedMultiplier, rightVal * speedMultiplier);
+        drive(leftVal * speedMultiplier * dir, rightVal * speedMultiplier * dir);
 
     }
     
