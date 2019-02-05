@@ -18,4 +18,11 @@ public class RobotMap {
 
     public static final int RIGHT_JOYSTICK_VERTICAL_AXIS = 5;
     public static final int LEFT_JOYSTICK_VERTICAL_AXIS = 1;
+    
+    // the following 5 values have been chosen at random
+    public static final int ARM_SOLENOID_PORT_CLOSE = 6;
+    public static final int ARM_SOLENOID_PORT_OPEN = 7;
+    public static final int BEAK_SOLENOID_PORT_CLOSE = 8;
+    public static final int BEAK_SOLENOID_PORT_OPEN = 9;
+    public static final int COMPRESSOR = 10;
 }
