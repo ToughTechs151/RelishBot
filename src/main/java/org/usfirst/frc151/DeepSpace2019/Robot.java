@@ -20,7 +20,7 @@ public class Robot extends TimedRobot {
     public static OI oi;
     public static Chassis chassis;
     public static Cargo cargo;
-    public static Hatch hatch;
+//    public static Hatch hatch;
     public static USBCamera usbCam;
     public static MjpegServer server;
     public static UsbCamera cam1, cam2;
@@ -30,10 +30,8 @@ public class Robot extends TimedRobot {
 
         chassis = new Chassis();
         cargo = new Cargo();
-        hatch = new Hatch();
+//        hatch = new Hatch();
         usbCam = new USBCamera();
-        cam1 = CameraServer.getInstance().startAutomaticCapture(0);
-        cam2 = CameraServer.getInstance().startAutomaticCapture(1);
         server = new MjpegServer("server", 0);
         server.setSource(cam1);
 
@@ -61,7 +59,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        autonomousCommand = chooser.getSelected();        
+        autonomousCommand = chooser.getSelected();
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -81,8 +79,6 @@ public class Robot extends TimedRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-
-        hatch.compressorOn();
     }
 
     /**

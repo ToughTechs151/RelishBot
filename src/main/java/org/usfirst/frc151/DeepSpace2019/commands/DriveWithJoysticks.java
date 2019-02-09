@@ -27,7 +27,7 @@ public class DriveWithJoysticks extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.chassis.drive(Robot.oi);
+    Robot.chassis.driveArcade(Robot.oi);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -45,5 +45,6 @@ public class DriveWithJoysticks extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    System.out.println("interrupted :(");
   }
 }

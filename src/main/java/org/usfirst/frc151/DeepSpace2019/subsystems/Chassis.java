@@ -20,9 +20,12 @@ public class Chassis extends Subsystem {
 
     DifferentialDrive driveTrain = null;
 //    public ADXRS450_Gyro gyro = null;
-    double speedMultiplier = 0.5;
-    public static final double TURBO = 0.75;
-    public static final double CRAWL = 0.25;
+	private double turnGain = 0.75;
+    private double straightGain = 1.0;
+    
+    double speedMultiplier = 1;
+    public static final double TURBO = 1.00;
+    public static final double CRAWL = 0.5;
     double direction = 1;
     private int dir = 1;
 
@@ -69,7 +72,35 @@ public class Chassis extends Subsystem {
         drive(leftVal * speedMultiplier * dir, rightVal * speedMultiplier * dir);
 
     }
+    public void driveArcade (OI oi) {
+		double throttle = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_VERTICAL_AXIS));
+		double turn = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_LATERAL_AXIS));
+
+		if(throttle != 0)
+			turn = turnGain * (turn * Math.abs(throttle));
+		else
+			turn *= turnGain;
+		
+		double initLeft = throttle - turn;
+		double initRight = throttle + turn;
+
+        // double left = initLeft * straightGain;
+        // double right = initRight * straightGain;
+		double left = straightGain * (initLeft + skim(initRight));
+		double right = straightGain * (initRight + skim(initLeft));
+	
+        drive(left, right);
+    }
     
+    private double skim(double speed) {
+		//Maximum PWM range is -1<=x<=1, so make up for that
+		if(speed > 1.0) {
+			return -(speed - 1.0);
+		} else if(speed < -1.0) {
+			return -(speed + 1.0);
+		}
+		return 0;
+	}
     public double deadzone(double val) {
         if(Math.abs(val) > 0.05) {
             return val;

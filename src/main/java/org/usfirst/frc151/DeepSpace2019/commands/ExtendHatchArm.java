@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019.commands;
+/** package org.usfirst.frc151.DeepSpace2019.commands;
 import org.usfirst.frc151.DeepSpace2019.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -44,3 +44,4 @@ public class ExtendHatchArm extends Command {
   protected void interrupted() {
   }
 }
+*/
