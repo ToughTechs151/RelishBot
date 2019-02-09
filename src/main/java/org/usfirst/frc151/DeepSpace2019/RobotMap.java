@@ -11,10 +11,10 @@ package org.usfirst.frc151.DeepSpace2019;
  * Add your docs here.
  */
 public class RobotMap {
-    public static final int FRONT_RIGHT = 2;
-    public static final int BACK_RIGHT = 3;
-    public static final int FRONT_LEFT = 0;
-    public static final int BACK_LEFT = 1;
+    public static final int FRONT_RIGHT = 0;
+    public static final int BACK_RIGHT = 1;
+    public static final int FRONT_LEFT = 2;
+    public static final int BACK_LEFT = 3;
 
     public static final int RIGHT_JOYSTICK_VERTICAL_AXIS = 5;
     public static final int LEFT_JOYSTICK_VERTICAL_AXIS = 1;
