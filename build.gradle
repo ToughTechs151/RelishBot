@@ -81,4 +81,4 @@ task deployHost() {
     }
 }
 build.dependsOn versionTxt
-// deploy.dependsOn deployHost
+build.dependsOn deployHost
