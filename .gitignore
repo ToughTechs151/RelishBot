@@ -151,3 +151,7 @@ bin/
 
 
 # End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
+
+# Temporary robot info files.
+buildtime.txt
+deployhost.txt

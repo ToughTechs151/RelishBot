@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2019.2.1"
@@ -59,3 +61,24 @@ jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
+task versionTxt() {
+    doLast {
+        String resourcesDir = "$projectDir/src/main/deploy"
+        new File("$resourcesDir/buildtime.txt").text =
+            new SimpleDateFormat("dd-MM-YYYY HH:mm:ss").format(new Date())
+    }
+}
+task deployHost() {
+    doLast {  
+        String deploy_host = ""      
+        String resourcesDir = "$projectDir/src/main/deploy"
+        try {
+            deploy_host = java.net.InetAddress.getLocalHost().getHostName()
+        } catch (all) {
+            deploy_host = "unknown"
+        }
+        new File("$resourcesDir/deployhost.txt").text = deploy_host
+    }
+}
+build.dependsOn versionTxt
+// deploy.dependsOn deployHost
