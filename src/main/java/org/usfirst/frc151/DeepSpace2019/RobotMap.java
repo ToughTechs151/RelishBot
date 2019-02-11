@@ -34,12 +34,12 @@ public class RobotMap {
 		
 //#region XboxOne Joysticks
     // Use _JS for variables assigned to these values.
-	// private static final int LEFT_STICK_X = 0;
-	// private static final int LEFT_STICK_Y = 1;
+	private static final int LEFT_STICK_X = 0;
+	private static final int LEFT_STICK_Y = 1;
 	// private static final int LEFT_TRIGGER = 2;
 	// private static final int RIGHT_TRIGGER = 3;
-	// private static final int RIGHT_STICK_X = 4;
-	// private static final int RIGHT_STICK_Y = 5;
+	private static final int RIGHT_STICK_X = 4;
+	private static final int RIGHT_STICK_Y = 5;
 //#endregion XboxOne Joysticks
     
 //#region XboxOne Buttons
@@ -59,11 +59,11 @@ public class RobotMap {
 // roboRIO constants
 //#region PWM ports
     // Use _PWM for variables assigned to these values.
-    private static final int PWM00 = 0;
+    // private static final int PWM00 = 0;
     private static final int PWM01 = 1;
     private static final int PWM02 = 2;
     private static final int PWM03 = 3;
-    // private static final int PWM04 = 4;
+    private static final int PWM04 = 4;
     // private static final int PWM05 = 5;
     // private static final int PWM06 = 6;
     // private static final int PWM07 = 7;
@@ -102,13 +102,14 @@ public class RobotMap {
 
 //#endregion Constants
 
-    public static final int FRONT_RIGHT = PWM00;
-    public static final int BACK_RIGHT = PWM01;
-    public static final int FRONT_LEFT = PWM02;
-    public static final int BACK_LEFT = PWM03;
+    public static final int FRONT_RIGHT = PWM01;
+    public static final int BACK_RIGHT = PWM02;
+    public static final int FRONT_LEFT = PWM03;
+    public static final int BACK_LEFT = PWM04;
 
-    public static final int RIGHT_JOYSTICK_VERTICAL_AXIS = 5;
-    public static final int LEFT_JOYSTICK_VERTICAL_AXIS = 1;
+    public static final int RIGHT_JOYSTICK_Y = RIGHT_STICK_Y;
+    public static final int LEFT_JOYSTICK_Y = LEFT_STICK_Y;
+    public static final int RIGHT_JOYSTICK_X = RIGHT_STICK_X;
     
     // the following 5 values have been chosen at random
     public static final int ARM_SOLENOID_PORT_CLOSE = 6;

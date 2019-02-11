@@ -63,11 +63,21 @@ public class Chassis extends Subsystem {
 
     }
 
+    public void driveArcade(double throttle, double turn) {
+        driveTrain.arcadeDrive(throttle, turn, true);
+    }
+
     public void drive (OI oi) {
-        double rightVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_VERTICAL_AXIS));
-        double leftVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_VERTICAL_AXIS));
+        double rightVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y));
+        double leftVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
         drive(leftVal * speedMultiplier * dir, rightVal * speedMultiplier * dir);
 
+    }
+
+    public void driveArcade(OI oi) {
+        double throttle = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
+        double turn = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_X));
+        drive(throttle * speedMultiplier * dir, turn * speedMultiplier * dir);
     }
     
     public double deadzone(double val) {
