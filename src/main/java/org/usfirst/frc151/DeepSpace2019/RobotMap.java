@@ -61,27 +61,27 @@ public class RobotMap {
     // Use _PWM for variables assigned to these values.
     // private static final int PWM00 = 0;
     // private static final int PWM01 = 1;
-    // private static final int PWM01 = 2;
-    // private static final int PWM01 = 3;
-    // private static final int PWM01 = 4;
-    // private static final int PWM01 = 5;
-    // private static final int PWM01 = 6;
-    // private static final int PWM01 = 7;
-    // private static final int PWM01 = 8;
-    // private static final int PWM01 = 9;
+    // private static final int PWM02 = 2;
+    // private static final int PWM03 = 3;
+    // private static final int PWM04 = 4;
+    // private static final int PWM05 = 5;
+    // private static final int PWM06 = 6;
+    // private static final int PWM07 = 7;
+    // private static final int PWM08 = 8;
+    // private static final int PWM09 = 9;
 //#endregion PWM ports
 //#region Digital IO ports
     // Use _DIO for variables assigned to these values.
     // private static final int DIO00 = 0;
     // private static final int DIO01 = 1;
-    // private static final int DIO01 = 2;
-    // private static final int DIO01 = 3;
-    // private static final int DIO01 = 4;
-    // private static final int DIO01 = 5;
-    // private static final int DIO01 = 6;
-    // private static final int DIO01 = 7;
-    // private static final int DIO01 = 8;
-    // private static final int DIO01 = 9;
+    // private static final int DIO02 = 2;
+    // private static final int DIO03 = 3;
+    // private static final int DIO04 = 4;
+    // private static final int DIO05 = 5;
+    // private static final int DIO06 = 6;
+    // private static final int DIO07 = 7;
+    // private static final int DIO08 = 8;
+    // private static final int DIO09 = 9;
 //#endregion Digital IO ports
 //#region Analog Input ports
     // Use _AI for variables assigned to these values.
