@@ -111,10 +111,12 @@ public class RobotMap {
     public static final int LEFT_JOYSTICK_Y = LEFT_STICK_Y;
     public static final int RIGHT_JOYSTICK_X = RIGHT_STICK_X;
     
-    // the following 5 values have been chosen at random
+    // the following values have been chosen at random
     public static final int ARM_SOLENOID_PORT_CLOSE = 6;
     public static final int ARM_SOLENOID_PORT_OPEN = 7;
     public static final int BEAK_SOLENOID_PORT_CLOSE = 8;
     public static final int BEAK_SOLENOID_PORT_OPEN = 9;
     public static final int COMPRESSOR = 10;
+    public static final int CARGO_LEFT = 4;
+	public static final int CARGO_RIGHT = 5;
 }

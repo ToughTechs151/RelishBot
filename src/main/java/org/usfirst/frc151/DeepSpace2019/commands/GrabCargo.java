@@ -5,9 +5,12 @@ import org.usfirst.frc151.DeepSpace2019.Robot;
 /**
  *
  */
-public class AutonomousCommand extends Command {
+public class GrabCargo extends Command {
 
-    public AutonomousCommand() {
+  
+    public GrabCargo() {
+
+        requires(Robot.cargo);
 
     }
 
@@ -19,6 +22,7 @@ public class AutonomousCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        Robot.cargo.turnWheelsGrab();
     }
 
     // Make this return true when this Command no longer needs to run execute()
