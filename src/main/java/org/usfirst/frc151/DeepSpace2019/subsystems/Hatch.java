@@ -26,7 +26,7 @@ public class Hatch extends Subsystem {
         }
        
 
-        hatchArm = new DoubleSolenoid(RobotMap.ARM_SOLENOID_PORT_CLOSE, RobotMap.ARM_SOLENOID_PORT_OPEN);
+        hatchArm = new DoubleSolenoid(RobotMap.ARM_SOLENOID_PORT_STOW, RobotMap.ARM_SOLENOID_PORT_DEPLOY);
         addChild("Arm", hatchArm);
 
         compressor = new Compressor(RobotMap.COMPRESSOR);
@@ -49,19 +49,19 @@ public class Hatch extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public void extendArm() {
-        hatchArm.set(Value.kForward);
-    }
-
-    public void retractArm() {
         hatchArm.set(Value.kReverse);
     }
 
+    public void retractArm() {
+        hatchArm.set(Value.kForward);
+    }
+
     public void extendBeak() {
-        beak.set(Value.kForward);
+        beak.set(Value.kReverse);
     }
 
     public void retractBeak() {
-        beak.set(Value.kReverse);
+        beak.set(Value.kForward);
     }
 
     public void compressorOn() {
@@ -72,5 +72,3 @@ public class Hatch extends Subsystem {
         compressor.setClosedLoopControl(false);
     }
 }
-
-*/

@@ -17,10 +17,11 @@ public class Robot extends TimedRobot {
     Command autonomousCommand;
     SendableChooser<Command> chooser = new SendableChooser<>();
 
-    public static OI oi;
+    public static DriverOI driverOI;
+    public static CoDriverOI coDriverOI;
     public static Chassis chassis;
     public static Cargo cargo;
-//    public static Hatch hatch;
+    public static Hatch hatch;
     public static USBCamera usbCam;
     public static MjpegServer server;
     public static UsbCamera cam1, cam2;
@@ -31,13 +32,14 @@ public class Robot extends TimedRobot {
 
         chassis = new Chassis();
         cargo = new Cargo();
-//        hatch = new Hatch();
+        hatch = new Hatch();
         usbCam = new USBCamera();
         server = new MjpegServer("server", 0);
         server.setSource(cam1);
         vision = new Vision();
 
-        oi = new OI(0);
+        driverOI = new DriverOI(0);
+        coDriverOI = new CoDriverOI(1);
 
 
         chooser.setDefaultOption("Autonomous Command", new AutonomousCommand());
