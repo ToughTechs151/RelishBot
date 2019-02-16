@@ -66,30 +66,21 @@ public class Chassis extends Subsystem {
 
     }
 
+    public void driveArcade(double throttle, double turn) {
+        driveTrain.arcadeDrive(throttle, turn, true);
+    }
+
     public void drive (OI oi) {
-        double rightVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_VERTICAL_AXIS));
-        double leftVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_VERTICAL_AXIS));
+        double rightVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y));
+        double leftVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
         drive(leftVal * speedMultiplier * dir, rightVal * speedMultiplier * dir);
 
     }
-    public void driveArcade (OI oi) {
-		double throttle = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_VERTICAL_AXIS));
-		double turn = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_LATERAL_AXIS));
 
-		if(throttle != 0)
-			turn = turnGain * (turn * Math.abs(throttle));
-		else
-			turn *= turnGain;
-		
-		double initLeft = throttle - turn;
-		double initRight = throttle + turn;
-
-        // double left = initLeft * straightGain;
-        // double right = initRight * straightGain;
-		double left = straightGain * (initLeft + skim(initRight));
-		double right = straightGain * (initRight + skim(initLeft));
-	
-        drive(left, right);
+    public void driveArcade(OI oi) {
+        double throttle = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
+        double turn = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_X));
+        drive(throttle * speedMultiplier * dir, turn * speedMultiplier * dir);
     }
     
     private double skim(double speed) {

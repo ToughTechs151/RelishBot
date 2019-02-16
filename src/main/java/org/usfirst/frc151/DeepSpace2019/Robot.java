@@ -24,6 +24,7 @@ public class Robot extends TimedRobot {
     public static USBCamera usbCam;
     public static MjpegServer server;
     public static UsbCamera cam1, cam2;
+    public static Vision vision;
 
     @Override
     public void robotInit() {
@@ -34,6 +35,7 @@ public class Robot extends TimedRobot {
         usbCam = new USBCamera();
         server = new MjpegServer("server", 0);
         server.setSource(cam1);
+        vision = new Vision();
 
         oi = new OI(0);
 
