@@ -11,14 +11,12 @@ public class CargoDrive extends Command {
     public CargoDrive() {
 
         requires(Robot.chassis);
-        requires(Robot.usbCam);
 
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.usbCam.cameraSwitch(Robot.cam1, Robot.server);
     }
 
     // Called repeatedly when this Command is scheduled to run

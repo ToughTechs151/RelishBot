@@ -11,14 +11,12 @@ public class HatchDrive extends Command {
     public HatchDrive() {
 
         requires(Robot.chassis);
-        requires(Robot.usbCam);
 
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.usbCam.cameraSwitch(Robot.cam2, Robot.server);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -22,9 +22,10 @@ public class Robot extends TimedRobot {
     public static Chassis chassis;
     public static Cargo cargo;
     public static Hatch hatch;
-    public static USBCamera usbCam;
-    public static MjpegServer server;
-    public static UsbCamera cam1, cam2;
+    public static MjpegServer cameraSwitchServer = null;
+    public static UsbCamera usbCamera0 = null;
+    public static UsbCamera usbCamera1 = null;
+    public static USBCamera cameraSubSystem = null;
     public static Vision vision;
 
     @Override
@@ -33,9 +34,8 @@ public class Robot extends TimedRobot {
         chassis = new Chassis();
         cargo = new Cargo();
         hatch = new Hatch();
-        usbCam = new USBCamera();
-        server = new MjpegServer("server", 0);
-        server.setSource(cam1);
+        cameraSubSystem = new USBCamera();
+
         vision = new Vision();
 
         driverOI = new DriverOI(0);
@@ -45,6 +45,14 @@ public class Robot extends TimedRobot {
         chooser.setDefaultOption("Autonomous Command", new AutonomousCommand());
 
         SmartDashboard.putData("Auto mode", chooser);
+
+        try {
+            usbCamera0 = CameraServer.getInstance().startAutomaticCapture("HatchCam", 0);
+            usbCamera1 = CameraServer.getInstance().startAutomaticCapture("CargoCam", 1);
+            cameraSwitchServer = CameraServer.getInstance().addSwitchedCamera("switchCam");
+          } catch (Exception e) {
+            System.out.println(e.getMessage());
+          }
     }
 
     /**

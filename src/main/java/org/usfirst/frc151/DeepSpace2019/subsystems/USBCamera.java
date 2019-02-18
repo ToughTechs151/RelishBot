@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc151.DeepSpace2019.subsystems;
+import org.usfirst.frc151.DeepSpace2019.Robot;
+
 import edu.wpi.cscore.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -15,13 +17,12 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class USBCamera extends Subsystem{
 
-    public void cameraSwitch (UsbCamera cam, MjpegServer server){
-
-        server.setSource(cam);
-
-    }   
 @Override
     public void initDefaultCommand() {
 
     }
-}
+    public void SwitchCamera(UsbCamera cameraToSwitch) {
+        Robot.cameraSwitchServer.setSource(cameraToSwitch);
+      }
+    }
+    
