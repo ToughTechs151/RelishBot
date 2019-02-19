@@ -1,17 +1,21 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package org.usfirst.frc151.DeepSpace2019.subsystems;
 
 import org.usfirst.frc151.DeepSpace2019.OI;
 import org.usfirst.frc151.DeepSpace2019.RobotMap;
-import org.usfirst.frc151.DeepSpace2019.commands.DriveWithJoysticks;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.RobotDrive;
+import org.usfirst.frc151.DeepSpace2019.commands.DriveWithJoysticksCommand;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Chassis extends Subsystem {
+public class ChassisSubsystem extends Subsystem {
 
     private Talon frontRight;
     private Talon backRight;
@@ -29,15 +33,15 @@ public class Chassis extends Subsystem {
     double direction = 1;
     private int dir = 1;
 
-    public void positiveDir() {
+    public void hatchDirection() {
         dir = 1;
     }
 
-    public void negativeDir() {
+    public void cargoDirection() {
         dir = -1;
     }
 
-    public Chassis() {
+    public ChassisSubsystem() {
         frontRight = new Talon(RobotMap.FRONT_RIGHT);
         backRight = new Talon(RobotMap.BACK_RIGHT);
         frontLeft = new Talon(RobotMap.FRONT_LEFT);
@@ -51,19 +55,16 @@ public class Chassis extends Subsystem {
         left.setInverted(true);
         right.setInverted(true);
 
-//        gyro = new ADXRS450_Gyro();
-
-        
+        // gyro = new ADXRS450_Gyro();
     }
 
     @Override
     public void initDefaultCommand() {
-        setDefaultCommand(new DriveWithJoysticks());
+        setDefaultCommand(new DriveWithJoysticksCommand());
     }
 
     public void drive (double left, double right) {
         driveTrain.tankDrive(left, right);
-
     }
 
     public void driveArcade(double throttle, double turn) {
@@ -71,34 +72,18 @@ public class Chassis extends Subsystem {
     }
 
     public void drive (OI oi) {
-        double rightVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_VERTICAL_AXIS));
-        double leftVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_VERTICAL_AXIS));
+        double rightVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y));
+        double leftVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
         drive(leftVal * speedMultiplier * dir, rightVal * speedMultiplier * dir);
-
     }
 
     public void driveArcade(OI oi) {
-        double throttle = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_VERTICAL_AXIS));
-        double turn = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_LATERAL_AXIS));
-        drive(throttle * speedMultiplier * dir, turn * speedMultiplier * dir);
+        double throttle = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
+        double turn = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_X));
+        drive(throttle * straightGain * dir, turn * turnGain * dir);
     }
     
-    private double skim(double speed) {
-		//Maximum PWM range is -1<=x<=1, so make up for that
-		if(speed > 1.0) {
-			return -(speed - 1.0);
-		} else if(speed < -1.0) {
-			return -(speed + 1.0);
-		}
-		return 0;
-	}
-    public double deadzone(double val) {
-        if(Math.abs(val) > 0.05) {
-            return val;
-        }
-        else {
-            return 0;
-        }
+    private double deadzone(double val) {
+        return Math.abs(val) < 0.05 ? val : 0;
     }
 }
-

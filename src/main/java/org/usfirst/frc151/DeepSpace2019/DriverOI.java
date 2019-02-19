@@ -7,13 +7,8 @@
 
 package org.usfirst.frc151.DeepSpace2019;
 
-import java.awt.Button;
-
 import org.usfirst.frc151.DeepSpace2019.commands.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Joystick;
-import org.usfirst.frc151.DeepSpace2019.subsystems.*;
-import edu.wpi.first.wpilibj.buttons.*;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * Driver OI Controls
@@ -21,10 +16,10 @@ import edu.wpi.first.wpilibj.buttons.*;
 public class DriverOI extends OI {
 
     public DriverOI(int channel) {
-    super(channel);				
-    b = new JoystickButton(joystick, RobotMap.B);
-    x = new JoystickButton(joystick, RobotMap.X);
-    b.whenPressed(new DriveCargoCamera());
-    x.whenPressed(new DriveHatchCamera());
+        super(channel);
+        b = new JoystickButton(joystick, RobotMap.B);
+        x = new JoystickButton(joystick, RobotMap.X);
+        b.whenPressed(new CargoModeCommandGroup());
+        x.whenPressed(new HatchModeCommandGroup());
     }
 }

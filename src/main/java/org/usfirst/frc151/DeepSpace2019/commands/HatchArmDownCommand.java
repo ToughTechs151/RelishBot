@@ -8,14 +8,11 @@
 package org.usfirst.frc151.DeepSpace2019.commands;
 
 import org.usfirst.frc151.DeepSpace2019.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CameraSwitchCargo extends Command {
-  public CameraSwitchCargo() {
-    requires(Robot.cameraSubSystem);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class HatchArmDownCommand extends Command {
+  public HatchArmDownCommand() {
+    requires(Robot.hatchSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -26,8 +23,9 @@ public class CameraSwitchCargo extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cameraSubSystem.SwitchCamera(Robot.usbCamera1);
+    Robot.hatchSubsystem.extendArm();
   }
+
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

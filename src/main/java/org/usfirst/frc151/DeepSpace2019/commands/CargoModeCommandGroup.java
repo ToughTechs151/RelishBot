@@ -5,11 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019;
+package org.usfirst.frc151.DeepSpace2019.commands;
 
-/**
- * The plan is to call this class once (set a flag or something) in Robot.java in both the teleopInit
- * and autonomousInit.
- */
-public class RobotInit {
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
+public class CargoModeCommandGroup extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public CargoModeCommandGroup() {
+    addParallel(new CargoDriveCommand());
+    addParallel(new SwitchToCargoCamCommand());
+  }
 }

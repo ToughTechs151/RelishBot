@@ -19,36 +19,31 @@ public class Robot extends TimedRobot {
 
     public static DriverOI driverOI;
     public static CoDriverOI coDriverOI;
-    public static Chassis chassis;
-    public static Cargo cargo;
-    public static Hatch hatch;
+    public static ChassisSubsystem chassisSubsystem;
+    public static CargoClawSubsystem cargoClawSubsystem;
+    public static HatchSubsystem hatchSubsystem;
     public static MjpegServer cameraSwitchServer = null;
-    public static UsbCamera usbCamera0 = null;
-    public static UsbCamera usbCamera1 = null;
-    public static USBCamera cameraSubSystem = null;
-    public static Vision vision;
+    public static UsbCamera hatchCamera = null;
+    public static UsbCamera cargoCamera = null;
+    public static UsbCameraSubsystem cameraSubSystem = null;
 
     @Override
     public void robotInit() {
-
-        chassis = new Chassis();
-        cargo = new Cargo();
-        hatch = new Hatch();
-        cameraSubSystem = new USBCamera();
-
-        vision = new Vision();
+        chassisSubsystem = new ChassisSubsystem();
+        cargoClawSubsystem = new CargoClawSubsystem();
+        hatchSubsystem = new HatchSubsystem();
+        cameraSubSystem = new UsbCameraSubsystem();
 
         driverOI = new DriverOI(0);
         coDriverOI = new CoDriverOI(1);
 
-
-        chooser.setDefaultOption("Autonomous Command", new AutonomousCommand());
+        chooser.setDefaultOption("Autonomous Command", null);
 
         SmartDashboard.putData("Auto mode", chooser);
 
         try {
-            usbCamera0 = CameraServer.getInstance().startAutomaticCapture("HatchCam", 0);
-            usbCamera1 = CameraServer.getInstance().startAutomaticCapture("CargoCam", 1);
+            hatchCamera = CameraServer.getInstance().startAutomaticCapture("HatchCam", 0);
+            cargoCamera = CameraServer.getInstance().startAutomaticCapture("CargoCam", 1);
             cameraSwitchServer = CameraServer.getInstance().addSwitchedCamera("switchCam");
           } catch (Exception e) {
             System.out.println(e.getMessage());

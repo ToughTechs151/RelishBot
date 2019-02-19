@@ -5,25 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019.subsystems;
+package org.usfirst.frc151.DeepSpace2019.commands;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class PixyPacket {
-	public int Signature;
-	public int X;
-	public int Y;
-	public int Width;
-	public int Height;
-	
-	//public int checksumError;
-	
-	public String toString() {
-		return "" +
-	" S:" + Signature +
-	" X:" + X + 
-	" Y:" + Y +
-	" W:" + Width + 
-	" H:" + Height;
-	}
+public class HatchModeCommandGroup extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public HatchModeCommandGroup() {
+    addParallel(new HatchDriveCommand());
+    addParallel(new SwitchToHatchCamCommand());
+  }
 }
