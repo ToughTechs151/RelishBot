@@ -43,5 +43,5 @@ public class RobotMap {
 	public static final int BACK = 7;
 	public static final int START = 8;
 	public static final int LEFT_JOYSTICK = 9;
-	public static final int RIGHT_JOYSTICK = 10;
+    public static final int RIGHT_JOYSTICK = 10;
 }
