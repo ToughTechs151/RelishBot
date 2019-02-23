@@ -43,7 +43,6 @@ public class CargoClawSubsystem extends Subsystem {
 
     //if output is positive, push: set right as positie and left as negative.
     //if output is negative, pull: set right as negative and left as positive
-    
     rightClaw.set(ControlMode.PercentOutput, output);
     leftClaw.set(ControlMode.PercentOutput, -output);
   }

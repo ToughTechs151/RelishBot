@@ -12,6 +12,7 @@ import org.usfirst.frc151.DeepSpace2019.RobotMap;
 import org.usfirst.frc151.DeepSpace2019.commands.DriveWithJoysticksCommand;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -24,22 +25,16 @@ public class ChassisSubsystem extends Subsystem {
 
     DifferentialDrive driveTrain = null;
 //    public ADXRS450_Gyro gyro = null;
-	private double turnGain = 0.75;
-    private double straightGain = 1.0;
     
-    double speedMultiplier = 1;
-    public static final double TURBO = 1.00;
-    public static final double CRAWL = 0.5;
-    double direction = 1;
+    //drive constants
+    private static double speedMultiplier = 1.0;
+    public static double normal = 1.0;
+    public static double crawl = 0.5;
+
+    //arcade drive constant
+	private double turnGain = 0.75;
+
     private int dir = 1;
-
-    public void hatchDirection() {
-        dir = 1;
-    }
-
-    public void cargoDirection() {
-        dir = -1;
-    }
 
     public ChassisSubsystem() {
         frontRight = new Talon(RobotMap.FRONT_RIGHT);
@@ -72,18 +67,48 @@ public class ChassisSubsystem extends Subsystem {
     }
 
     public void drive (OI oi) {
+        if(oi.getJoystick().getRawButton(RobotMap.RIGHT_BUMPER)) {
+            speedMultiplier = crawl;
+        } else {
+            speedMultiplier = normal;
+        }
+
+        if(oi.getJoystick().getRawButton(RobotMap.LEFT_BUMPER)) {
+            dir = -1;
+        } else {
+            dir = 1;
+        }
+
         double rightVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y));
         double leftVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
+
+        // System.out.println("right: " + rightVal + "\tleft: " + leftVal);
+        
         drive(leftVal * speedMultiplier * dir, rightVal * speedMultiplier * dir);
     }
 
     public void driveArcade(OI oi) {
+        if(oi.getJoystick().getRawButton(RobotMap.RIGHT_BUMPER)) {
+            speedMultiplier = crawl;
+        } else {
+            speedMultiplier = normal;
+        }
+
+        if(oi.getJoystick().getRawButton(RobotMap.LEFT_BUMPER)) {
+            dir = -1;
+        } else {
+            dir = 1;
+        }
+
         double throttle = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
         double turn = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_X));
-        drive(throttle * straightGain * dir, turn * turnGain * dir);
+
+        System.out.println("throttle: " + throttle + "\tturn: " + turn);
+        
+        driveArcade(throttle * speedMultiplier * dir, turn * speedMultiplier * turnGain * dir);
     }
     
     private double deadzone(double val) {
-        return Math.abs(val) < 0.05 ? val : 0;
+        return Math.abs(val) > 0.025 ? val : 0;
     }
 }

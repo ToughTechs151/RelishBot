@@ -31,8 +31,6 @@ public class HatchSubsystem extends Subsystem {
         } catch (Exception e) {
             System.out.println("Hatch arm solenoid missing");
         }
-
-        compressor = new Compressor(RobotMap.COMPRESSOR);
     }
 
     @Override
@@ -55,13 +53,5 @@ public class HatchSubsystem extends Subsystem {
 
     public void closeBeak() {
         beak.set(Value.kForward);
-    }
-
-    public void compressorOn() {
-        compressor.setClosedLoopControl(true);
-    }
-
-    public void compressorOff() {
-        compressor.setClosedLoopControl(false);
     }
 }
