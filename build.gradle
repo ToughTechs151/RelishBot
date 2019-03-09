@@ -2,7 +2,7 @@ import java.text.SimpleDateFormat
 
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2019.3.2"
+    id "edu.wpi.first.GradleRIO" version "2019.4.1"
 }
 
 def ROBOT_MAIN_CLASS = "org.usfirst.frc151.DeepSpace2019.Main"
