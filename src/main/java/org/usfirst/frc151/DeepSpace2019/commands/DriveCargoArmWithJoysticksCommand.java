@@ -8,11 +8,12 @@
 package org.usfirst.frc151.DeepSpace2019.commands;
 
 import org.usfirst.frc151.DeepSpace2019.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveWithJoysticksCommand extends Command {
-  public DriveWithJoysticksCommand() {
-    requires(Robot.chassisSubsystem);
+public class DriveCargoArmWithJoysticksCommand extends Command {
+  public DriveCargoArmWithJoysticksCommand() {
+    requires(Robot.cargoArmSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -23,7 +24,7 @@ public class DriveWithJoysticksCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.chassisSubsystem.drive(Robot.driverOI, Robot.SCALED_DRIVE);
+    Robot.cargoArmSubsystem.manualCargoArm(Robot.coDriverOI);
   }
 
   // Make this return true when this Command no longer needs to run execute()

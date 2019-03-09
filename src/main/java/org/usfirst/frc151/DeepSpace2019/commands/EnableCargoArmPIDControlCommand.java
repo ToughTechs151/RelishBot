@@ -7,11 +7,12 @@
 
 package org.usfirst.frc151.DeepSpace2019.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc151.DeepSpace2019.Robot;
 
-public class DriveCargoArmWithTriggersCommand extends Command {
-  public DriveCargoArmWithTriggersCommand() {
+import edu.wpi.first.wpilibj.command.Command;
+
+public class EnableCargoArmPIDControlCommand extends Command {
+  public EnableCargoArmPIDControlCommand() {
     requires(Robot.cargoArmSubsystem);
   }
 
@@ -23,13 +24,14 @@ public class DriveCargoArmWithTriggersCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cargoArmSubsystem.driveManual(Robot.coDriverOI);
+    Robot.cargoArmSubsystem.setSetpoint(Robot.cargoArmSubsystem.lastManualPos);
+    Robot.cargoArmSubsystem.enable();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

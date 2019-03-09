@@ -27,13 +27,53 @@ public class ChassisSubsystem extends Subsystem {
 //    public ADXRS450_Gyro gyro = null;
     
     //drive constants
+    /**
+     * The scaling factor between the joystick value and the speed controller
+     */
     private static double speedMultiplier = 1.0;
-    public static double normal = 1.0;
-    public static double crawl = 0.5;
+    /**
+     * The scale factor for normal mode
+     */
+    private static final double normal = 1.0;
+
+    /**
+     * The scale factor for crawl mode
+     */
+    private static final double crawl = 0.5;
+
+    /**
+     * The minimum (closest to 0) speed controller command for the right side of the drive train to start moving forward. Must be empirically derived.
+     */
+    private static double mechDeadbandRightForward = 0;
+
+    /**
+     * The maximum (closest to 0) speed controller command for the right side of the drive train to start moving backward. Must be empirically derived.
+     * Must be negative.
+     */
+    private static double mechDeadbandRightBackward = 0;
+
+    /**
+     * The minimum (closest to 0) speed controller command for the left side of the drive train to start moving forward. Must be empirically derived.
+     */
+    private static double mechDeadbandLeftForward = 0;
+
+    /**
+     * The maximum (closest to 0) speed controller command for the left side of the drive train to start moving backward. Must be empirically derived.
+     * Must be negative.
+     */
+    private static double mechDeadbandLeftBackward = 0;
+
+    /**
+     * The minimum joystick value to actually send a command to the speed controller, to prevent noise near 0.
+     */
+    private static double softwareDeadband = 0.05;
 
     //arcade drive constant
 	private double turnGain = 0.75;
 
+    /**
+     * The direction which is "forward"; 1 represents the hatch side and -1 represents the cargo side.
+     */
     private int dir = 1;
 
     public ChassisSubsystem() {
@@ -58,7 +98,7 @@ public class ChassisSubsystem extends Subsystem {
         setDefaultCommand(new DriveWithJoysticksCommand());
     }
 
-    public void drive (double left, double right) {
+    public void drive(double left, double right) {
         driveTrain.tankDrive(left, right);
     }
 
@@ -66,49 +106,87 @@ public class ChassisSubsystem extends Subsystem {
         driveTrain.arcadeDrive(throttle, turn, true);
     }
 
-    public void drive (OI oi) {
-        if(oi.getJoystick().getRawButton(RobotMap.RIGHT_BUMPER)) {
-            speedMultiplier = crawl;
-        } else {
-            speedMultiplier = normal;
+    /**
+     * Method to drive in tank drive based on joystick input.
+     * @param oi The oi to base joystick values off of (Driver or CoDriver.)
+     * @param scale Whether or not to scale output values to account for mechanical deadband.
+     */
+    public void drive(OI oi, boolean scale) {
+        speedMultiplier = oi.getJoystick().getRawButton(RobotMap.RIGHT_BUMPER) ? crawl : normal;
+        dir = oi.getJoystick().getRawButton(RobotMap.LEFT_BUMPER) ? -1 : 1;
+
+        double rightVal = 0;
+        double leftVal = 0;
+
+        if(dir == 1) {
+            rightVal = getRightValue(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y), scale);
+            leftVal = getLeftValue(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y), scale);
+        } else if(dir == -1) {
+            rightVal = getRightValue(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y), scale);
+            leftVal = getLeftValue(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y), scale);
         }
-
-        if(oi.getJoystick().getRawButton(RobotMap.LEFT_BUMPER)) {
-            dir = -1;
-        } else {
-            dir = 1;
-        }
-
-        double rightVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y));
-        double leftVal = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
-
-        // System.out.println("right: " + rightVal + "\tleft: " + leftVal);
         
         drive(leftVal * speedMultiplier * dir, rightVal * speedMultiplier * dir);
     }
 
+    /**
+     * Method to drive in arcade drive based on joystick input.
+     * @param oi The oi to base joystick values off of (Driver or CoDriver.)
+     */
     public void driveArcade(OI oi) {
-        if(oi.getJoystick().getRawButton(RobotMap.RIGHT_BUMPER)) {
-            speedMultiplier = crawl;
-        } else {
-            speedMultiplier = normal;
-        }
-
-        if(oi.getJoystick().getRawButton(RobotMap.LEFT_BUMPER)) {
-            dir = -1;
-        } else {
-            dir = 1;
-        }
+        speedMultiplier = oi.getJoystick().getRawButton(RobotMap.RIGHT_BUMPER) ? crawl : normal;
+        dir = oi.getJoystick().getRawButton(RobotMap.LEFT_BUMPER) ? -1 : 1;
 
         double throttle = deadzone(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y));
         double turn = deadzone(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_X));
-
-        System.out.println("throttle: " + throttle + "\tturn: " + turn);
         
         driveArcade(throttle * speedMultiplier * dir, turn * speedMultiplier * turnGain * dir);
     }
     
+    /**
+     * The method to scale raw right joystick input to a usable drive output.
+     * @param val The input from a joystick.
+     * @param scale Whether or not to scale the output to account for mechanical deadband. If true, value is scaled to account for mechanical deadband. If false, value is 
+     *              simply returned as long as it is not in the range <code> (-softwareDeadband < val < softwareDeadband)</code>, in which case 0 is returned.
+     * @return Scaled drive output.
+     */
+    private double getRightValue(double val, boolean scale) {
+        if(scale) {
+            if(val > 0) {
+                return Math.abs(val) < softwareDeadband ? 0 : ((1-mechDeadbandRightForward) * (val-1) / (1-softwareDeadband) + 1);
+            } else {   
+                return Math.abs(val) < softwareDeadband ? 0 : ((1+mechDeadbandRightBackward) * (val+1) / (1-softwareDeadband) - 1);
+            }
+        } else {
+            return deadzone(val);
+        }
+    }
+
+    /**
+     * The method to scale raw left joystik input to a usable drive output.
+     * @param val The input from a joystick.
+     * @param scale Whether or not to scale the output to account for mechanical deadband. If true, value is scaled to account for mechanical deadband. If false, value is 
+     *              simply returned as long as it is not in the range <code> (-softwareDeadband < val < softwareDeadband)</code>, in which case 0 is returned.
+     * @return Scaled drive output.
+     */
+    private double getLeftValue(double val, boolean scale) {
+        if(scale) {
+            if(val > 0) {
+                return Math.abs(val) < softwareDeadband ? 0 : ((1-mechDeadbandLeftForward) * (val - 1) / (1-softwareDeadband) + 1);
+            } else {
+                return Math.abs(val) < softwareDeadband ? 0 : ((1-mechDeadbandLeftBackward) * (val - 1) / (1-softwareDeadband) + 1);
+            }
+        } else {
+            return deadzone(val);
+        }
+    }
+
+    /**
+     * Method to reduce noise around the 0 position of the joystick.
+     * @param val The raw joystick input.
+     * @return If the input is outside the range <code> (-softwareDeadband < val < softwareDeadband)</code>, it is returned. Else, 0 is returned.
+     */
     private double deadzone(double val) {
-        return Math.abs(val) > 0.025 ? val : 0;
+        return Math.abs(val) > softwareDeadband ? val : 0;
     }
 }

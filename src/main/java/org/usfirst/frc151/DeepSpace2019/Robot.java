@@ -12,6 +12,11 @@ import edu.wpi.cscore.*;
 
 public class Robot extends TimedRobot {
 
+    /**
+     * Whether or not to scale drive outputs to account for mechanical deadband.
+     */
+    public static final boolean SCALED_DRIVE = false;
+
     Command autonomousCommand;
     SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -19,7 +24,7 @@ public class Robot extends TimedRobot {
     public static CoDriverOI coDriverOI;
     public static ChassisSubsystem chassisSubsystem;
     public static CargoClawSubsystem cargoClawSubsystem;
-    public static CargoArmSubsystem cargoArmSubsystem;
+    public static CargoArmPIDSubsystem cargoArmSubsystem;
     public static HatchSubsystem hatchSubsystem;
     public static MjpegServer cameraSwitchServer = null;
     public static UsbCamera hatchCamera = null;
@@ -32,7 +37,7 @@ public class Robot extends TimedRobot {
         cargoClawSubsystem = new CargoClawSubsystem();
         hatchSubsystem = new HatchSubsystem();
         cameraSubSystem = new UsbCameraSubsystem();
-        cargoArmSubsystem = new CargoArmSubsystem();
+        cargoArmSubsystem = new CargoArmPIDSubsystem();
 
         driverOI = new DriverOI(0);
         coDriverOI = new CoDriverOI(1);
