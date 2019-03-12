@@ -63,6 +63,7 @@ public class CargoArmPIDSubsystem extends PIDSubsystem {
     SmartDashboard.putNumber("kD", kD);
 
     cargoArm = new WPI_TalonSRX(1);
+    cargoArm.configFactoryDefault();
     cargoArm.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 30);
     cargoArm.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     cargoArm.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);

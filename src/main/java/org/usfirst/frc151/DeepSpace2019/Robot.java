@@ -15,7 +15,7 @@ public class Robot extends TimedRobot {
     /**
      * Whether or not to scale drive outputs to account for mechanical deadband.
      */
-    public static final boolean SCALED_DRIVE = false;
+    public static final boolean SCALED_DRIVE = true;
 
     Command autonomousCommand;
     SendableChooser<Command> chooser = new SendableChooser<>();
@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
     public static ChassisSubsystem chassisSubsystem;
     public static CargoClawSubsystem cargoClawSubsystem;
     public static CargoArmPIDSubsystem cargoArmSubsystem;
+    public static ClimberSubsystem climberSubsystem;
     public static HatchSubsystem hatchSubsystem;
     public static MjpegServer cameraSwitchServer = null;
     public static UsbCamera hatchCamera = null;
@@ -35,6 +36,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         chassisSubsystem = new ChassisSubsystem();
         cargoClawSubsystem = new CargoClawSubsystem();
+        climberSubsystem = new ClimberSubsystem();
         hatchSubsystem = new HatchSubsystem();
         cameraSubSystem = new UsbCameraSubsystem();
         cargoArmSubsystem = new CargoArmPIDSubsystem();
@@ -42,8 +44,11 @@ public class Robot extends TimedRobot {
         driverOI = new DriverOI(0);
         coDriverOI = new CoDriverOI(1);
 
-        chooser.setDefaultOption("Autonomous Command", null);
+        climberSubsystem.retractPiston();
+        hatchSubsystem.retractArm();
+        hatchSubsystem.openBeak();
 
+        chooser.setDefaultOption("Autonomous Command", null);
         SmartDashboard.putData("Auto mode", chooser);
 
         try {

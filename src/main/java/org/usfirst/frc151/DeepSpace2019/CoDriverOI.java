@@ -34,7 +34,7 @@ public class CoDriverOI extends OI {
 
         a.whenPressed(new ChangeCargoArmSetpointCommand(90));
 		b.whenPressed(new ChangeCargoArmSetpointCommand(185));
-		y.whenPressed(new ChangeCargoArmSetpointCommand(350));
+		y.whenPressed(new ChangeCargoArmSetpointCommand(310));
         x.whenPressed(new ChangeCargoArmSetpointCommand(500));
         
         leftJoystick = new JoystickButton(joystick, RobotMap.LEFT_JOYSTICK);

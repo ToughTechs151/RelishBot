@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ChassisSubsystem extends Subsystem {
 
@@ -44,24 +45,24 @@ public class ChassisSubsystem extends Subsystem {
     /**
      * The minimum (closest to 0) speed controller command for the right side of the drive train to start moving forward. Must be empirically derived.
      */
-    private static double mechDeadbandRightForward = 0;
+    private static double mechDeadbandRightForward = 0.25;
 
     /**
      * The maximum (closest to 0) speed controller command for the right side of the drive train to start moving backward. Must be empirically derived.
      * Must be negative.
      */
-    private static double mechDeadbandRightBackward = 0;
+    private static double mechDeadbandRightBackward = -0.27;
 
     /**
      * The minimum (closest to 0) speed controller command for the left side of the drive train to start moving forward. Must be empirically derived.
      */
-    private static double mechDeadbandLeftForward = 0;
+    private static double mechDeadbandLeftForward = 0.23;
 
     /**
      * The maximum (closest to 0) speed controller command for the left side of the drive train to start moving backward. Must be empirically derived.
      * Must be negative.
      */
-    private static double mechDeadbandLeftBackward = 0;
+    private static double mechDeadbandLeftBackward = -0.29;
 
     /**
      * The minimum joystick value to actually send a command to the speed controller, to prevent noise near 0.
@@ -125,6 +126,9 @@ public class ChassisSubsystem extends Subsystem {
             rightVal = getRightValue(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y), scale);
             leftVal = getLeftValue(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y), scale);
         }
+
+        SmartDashboard.putNumber("Left scaled value", leftVal);
+        SmartDashboard.putNumber("Right scaled value", rightVal);
         
         drive(leftVal * speedMultiplier * dir, rightVal * speedMultiplier * dir);
     }
@@ -153,9 +157,9 @@ public class ChassisSubsystem extends Subsystem {
     private double getRightValue(double val, boolean scale) {
         if(scale) {
             if(val > 0) {
-                return Math.abs(val) < softwareDeadband ? 0 : ((1-mechDeadbandRightForward) * (val-1) / (1-softwareDeadband) + 1);
+                return Math.abs(val) < softwareDeadband ? 0 : (((1.0 - mechDeadbandRightForward) * (val -1.0) / (1.0 - softwareDeadband)) + 1.0);
             } else {   
-                return Math.abs(val) < softwareDeadband ? 0 : ((1+mechDeadbandRightBackward) * (val+1) / (1-softwareDeadband) - 1);
+                return Math.abs(val) < softwareDeadband ? 0 : (((1.0 + mechDeadbandRightBackward) * (val + 1.0) / (1.0 - softwareDeadband)) - 1.0);
             }
         } else {
             return deadzone(val);
@@ -172,9 +176,9 @@ public class ChassisSubsystem extends Subsystem {
     private double getLeftValue(double val, boolean scale) {
         if(scale) {
             if(val > 0) {
-                return Math.abs(val) < softwareDeadband ? 0 : ((1-mechDeadbandLeftForward) * (val - 1) / (1-softwareDeadband) + 1);
+                return Math.abs(val) < softwareDeadband ? 0 : (((1.0 - mechDeadbandLeftForward) * (val - 1.0) / (1.0 - softwareDeadband)) + 1.0);
             } else {
-                return Math.abs(val) < softwareDeadband ? 0 : ((1-mechDeadbandLeftBackward) * (val - 1) / (1-softwareDeadband) + 1);
+                return Math.abs(val) < softwareDeadband ? 0 : (((1.0 + mechDeadbandLeftBackward) * (val + 1.0) / (1.0 - softwareDeadband)) - 1.0);
             }
         } else {
             return deadzone(val);

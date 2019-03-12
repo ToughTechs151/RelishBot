@@ -17,5 +17,10 @@ public class DriverOI extends OI {
 
     public DriverOI(int channel) {
         super(channel);
+        a = new JoystickButton(joystick, RobotMap.A);
+        y = new JoystickButton(joystick, RobotMap.Y);
+
+        a.whenPressed(new ExtendPistonCommand());
+        y.whenPressed(new RetractPistonCommand());
     }
 }

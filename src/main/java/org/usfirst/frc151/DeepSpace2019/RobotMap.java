@@ -26,7 +26,8 @@ public class RobotMap {
     public static final int ARM_SOLENOID_PORT_DEPLOY = 3;
     public static final int BEAK_SOLENOID_PORT_CLOSE = 1;
     public static final int BEAK_SOLENOID_PORT_OPEN = 0;
-    public static final int CLIMBER_SOLENOID = 4;
+    public static final int CLIMBER_FORWARD = 4;
+    public static final int CLIMBER_REVERSE = 5;
 
     //OI AXES
     public static final int LEFT_JOYSTICK_X = 0;
