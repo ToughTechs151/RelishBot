@@ -19,6 +19,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ChassisSubsystem extends Subsystem {
 
+    public enum RobotSide {
+        LEFT, RIGHT;
+    }
+
     private Talon frontRight;
     private Talon backRight;
     private Talon frontLeft;
@@ -110,9 +114,9 @@ public class ChassisSubsystem extends Subsystem {
     /**
      * Method to drive in tank drive based on joystick input.
      * @param oi The oi to base joystick values off of (Driver or CoDriver.)
-     * @param scale Whether or not to scale output values to account for mechanical deadband.
+     * @param scale Whether or not to scale output values to account for mechanical deadband. 0 is no scaling; 1 is linear scaling; 2 is quadratic scaling
      */
-    public void drive(OI oi, boolean scale) {
+    public void drive(OI oi, int scale) {
         speedMultiplier = oi.getJoystick().getRawButton(RobotMap.RIGHT_BUMPER) ? crawl : normal;
         dir = oi.getJoystick().getRawButton(RobotMap.LEFT_BUMPER) ? -1 : 1;
 
@@ -120,19 +124,19 @@ public class ChassisSubsystem extends Subsystem {
         double leftVal = 0;
 
         if(dir == 1) {
-            rightVal = getRightValue(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y), scale);
-            leftVal = getLeftValue(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y), scale);
+            rightVal = getScaledValue(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y), scale, RobotSide.RIGHT);
+            leftVal = getScaledValue(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y), scale, RobotSide.LEFT);
         } else if(dir == -1) {
-            rightVal = getRightValue(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y), scale);
-            leftVal = getLeftValue(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y), scale);
+            rightVal = getScaledValue(oi.getJoystick().getRawAxis(RobotMap.LEFT_JOYSTICK_Y), scale, RobotSide.RIGHT);
+            leftVal = getScaledValue(oi.getJoystick().getRawAxis(RobotMap.RIGHT_JOYSTICK_Y), scale, RobotSide.LEFT);
         }
-
-        SmartDashboard.putNumber("Left scaled value", leftVal);
-        SmartDashboard.putNumber("Right scaled value", rightVal);
         
         drive(leftVal * speedMultiplier * dir, rightVal * speedMultiplier * dir);
     }
 
+    public void driveStraight(OI oi) {
+
+    }
     /**
      * Method to drive in arcade drive based on joystick input.
      * @param oi The oi to base joystick values off of (Driver or CoDriver.)
@@ -147,41 +151,36 @@ public class ChassisSubsystem extends Subsystem {
         driveArcade(throttle * speedMultiplier * dir, turn * speedMultiplier * turnGain * dir);
     }
     
-    /**
-     * The method to scale raw right joystick input to a usable drive output.
-     * @param val The input from a joystick.
-     * @param scale Whether or not to scale the output to account for mechanical deadband. If true, value is scaled to account for mechanical deadband. If false, value is 
-     *              simply returned as long as it is not in the range <code> (-softwareDeadband < val < softwareDeadband)</code>, in which case 0 is returned.
-     * @return Scaled drive output.
-     */
-    private double getRightValue(double val, boolean scale) {
-        if(scale) {
-            if(val > 0) {
-                return Math.abs(val) < softwareDeadband ? 0 : (((1.0 - mechDeadbandRightForward) * (val -1.0) / (1.0 - softwareDeadband)) + 1.0);
-            } else {   
-                return Math.abs(val) < softwareDeadband ? 0 : (((1.0 + mechDeadbandRightBackward) * (val + 1.0) / (1.0 - softwareDeadband)) - 1.0);
-            }
-        } else {
-            return deadzone(val);
-        }
-    }
 
-    /**
-     * The method to scale raw left joystik input to a usable drive output.
-     * @param val The input from a joystick.
-     * @param scale Whether or not to scale the output to account for mechanical deadband. If true, value is scaled to account for mechanical deadband. If false, value is 
-     *              simply returned as long as it is not in the range <code> (-softwareDeadband < val < softwareDeadband)</code>, in which case 0 is returned.
-     * @return Scaled drive output.
-     */
-    private double getLeftValue(double val, boolean scale) {
-        if(scale) {
+    private double getScaledValue(double val, int scale, RobotSide side) {
+        double forward, back;
+
+        if(side.equals(RobotSide.RIGHT)) {
+            forward = Math.abs(mechDeadbandRightForward);
+            back = Math.abs(mechDeadbandRightBackward);
+        } else {
+            forward = Math.abs(mechDeadbandLeftForward);
+            back = Math.abs(mechDeadbandLeftBackward);
+        }
+
+        if(Math.abs(val) < softwareDeadband) {
+            return 0;
+        } else if(scale == 0) {
+            return deadzone(val);
+        } else if(scale == 1) {
             if(val > 0) {
-                return Math.abs(val) < softwareDeadband ? 0 : (((1.0 - mechDeadbandLeftForward) * (val - 1.0) / (1.0 - softwareDeadband)) + 1.0);
+                return (((1.0 - forward) * (val - 1.0) / (1.0 - softwareDeadband)) + 1.0);
             } else {
-                return Math.abs(val) < softwareDeadband ? 0 : (((1.0 + mechDeadbandLeftBackward) * (val + 1.0) / (1.0 - softwareDeadband)) - 1.0);
+                return (((1.0 - back) * (val + 1.0) / (1.0 - softwareDeadband)) -  1.0);
+            }
+        } else if(scale == 2) {
+            if(val > 0) {
+                return (1- forward) / Math.pow(1 - softwareDeadband, 2) * Math.pow(val - softwareDeadband, 2) + forward;
+            } else {
+                return (-1 + back) / Math.pow(-1 + softwareDeadband, 2) * Math.pow(val + softwareDeadband, 2) - back;
             }
         } else {
-            return deadzone(val);
+            return 0;
         }
     }
 

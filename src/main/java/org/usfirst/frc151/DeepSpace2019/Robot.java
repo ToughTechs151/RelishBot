@@ -5,7 +5,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc151.DeepSpace2019.vision.PixyPacket;
 import org.usfirst.frc151.DeepSpace2019.subsystems.*;
+import org.usfirst.frc151.DeepSpace2019.vision.Pixy2Camera;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.*;
 
@@ -13,9 +16,15 @@ import edu.wpi.cscore.*;
 public class Robot extends TimedRobot {
 
     /**
-     * Whether or not to scale drive outputs to account for mechanical deadband.
+     * How to scale drive outputs to account for mechanical deadband.
      */
-    public static final boolean SCALED_DRIVE = true;
+    public static final int SCALED_DRIVE = 2;
+
+    public static PixyPacket[] pixyPacketArr = new PixyPacket[2];
+
+    public static final double DRIVE_KP = 0.01;
+    public static final double DRIVE_KI = 0;
+    public static final double DRIVE_KD = 0;
 
     Command autonomousCommand;
     SendableChooser<Command> chooser = new SendableChooser<>();
@@ -27,11 +36,15 @@ public class Robot extends TimedRobot {
     public static CargoArmPIDSubsystem cargoArmSubsystem;
     public static ClimberSubsystem climberSubsystem;
     public static HatchSubsystem hatchSubsystem;
+    public static Pixy2Camera pixyCam;
+    public static LEDSubsystem ledSubsystem;
+    
     public static MjpegServer cameraSwitchServer = null;
     public static UsbCamera hatchCamera = null;
     public static UsbCamera cargoCamera = null;
     public static UsbCameraSubsystem cameraSubSystem = null;
 
+    public static boolean pixyInUseByCommand;
     @Override
     public void robotInit() {
         chassisSubsystem = new ChassisSubsystem();
@@ -40,6 +53,8 @@ public class Robot extends TimedRobot {
         hatchSubsystem = new HatchSubsystem();
         cameraSubSystem = new UsbCameraSubsystem();
         cargoArmSubsystem = new CargoArmPIDSubsystem();
+        pixyCam = new Pixy2Camera(I2C.Port.kOnboard, 0x54);
+        ledSubsystem = new LEDSubsystem();
 
         driverOI = new DriverOI(0);
         coDriverOI = new CoDriverOI(1);
@@ -47,9 +62,6 @@ public class Robot extends TimedRobot {
         climberSubsystem.retractPiston();
         hatchSubsystem.retractArm();
         hatchSubsystem.openBeak();
-
-        chooser.setDefaultOption("Autonomous Command", null);
-        SmartDashboard.putData("Auto mode", chooser);
 
         try {
             hatchCamera = CameraServer.getInstance().startAutomaticCapture("HatchCam", 0);
@@ -103,6 +115,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        if(!pixyInUseByCommand) {
+            pixyCam.getBlocks(pixyPacketArr, (byte) 0x01, 0x02);
+        }
         Scheduler.getInstance().run();
     }
 }

@@ -11,6 +11,9 @@ package org.usfirst.frc151.DeepSpace2019;
  * Add your docs here.
  */
 public class RobotMap {
+    //RELAY PORTS
+    public static final int LED_RELAY = 0;
+    
     //PWM PORTS
     public static final int FRONT_RIGHT = 1;
     public static final int BACK_RIGHT = 2;
