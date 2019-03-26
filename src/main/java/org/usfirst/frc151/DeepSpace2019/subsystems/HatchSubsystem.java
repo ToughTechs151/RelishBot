@@ -40,18 +40,18 @@ public class HatchSubsystem extends Subsystem {
     }
 
     public void extendArm() {
-        hatchArm.set(Value.kReverse);
-    }
-
-    public void retractArm() {
         hatchArm.set(Value.kForward);
     }
 
+    public void retractArm() {
+        hatchArm.set(Value.kReverse);
+    }
+
     public void openBeak() {
-        beak.set(Value.kReverse);
+        beak.set(Value.kForward);
     }
 
     public void closeBeak() {
-        beak.set(Value.kForward);
+        beak.set(Value.kReverse);
     }
 }
