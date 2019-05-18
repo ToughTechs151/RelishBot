@@ -215,6 +215,8 @@ public class Pixy2Camera {
                     successful = true;
                 }
             }
+        } else {
+            System.out.println("no version");
         }
         return successful;
     }
@@ -264,6 +266,8 @@ public class Pixy2Camera {
             result[0] = centerX;
             result[1] = centerY;
             result[2] = bottomRightX - topLeftX;
+        } else {
+            // System.out.println("aborted");
         }
         return successful;
     }

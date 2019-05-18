@@ -10,7 +10,6 @@ package org.usfirst.frc151.DeepSpace2019.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc151.DeepSpace2019.RobotMap;
-import org.usfirst.frc151.DeepSpace2019.commands.RetractPistonCommand;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
@@ -21,10 +20,12 @@ public class ClimberSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private DoubleSolenoid piston = null;
+  private DoubleSolenoid frontPiston = null;
+  private DoubleSolenoid backPiston = null;
 
   public ClimberSubsystem () {
-    piston = new DoubleSolenoid(RobotMap.CLIMBER_FORWARD, RobotMap.CLIMBER_REVERSE);
+    frontPiston = new DoubleSolenoid(RobotMap.FRONT_CLIMBER_FORWARD, RobotMap.FRONT_CLIMBER_REVERSE);
+    backPiston = new DoubleSolenoid(RobotMap.BACK_CLIMBER_FORWARD, RobotMap.BACK_CLIMBER_REVERSE);
   }
 
   @Override
@@ -32,11 +33,19 @@ public class ClimberSubsystem extends Subsystem {
     
   }
 
-  public void extendPiston() {
-    piston.set(DoubleSolenoid.Value.kForward);
+  public void extendFrontPiston() {
+    frontPiston.set(DoubleSolenoid.Value.kForward);
   }
 
-  public void retractPiston() {
-    piston.set(DoubleSolenoid.Value.kReverse);
+  public void retractFrontPiston() {
+    frontPiston.set(DoubleSolenoid.Value.kReverse);
+  }
+
+  public void extendBackPiston() {
+    backPiston.set(DoubleSolenoid.Value.kForward);
+  }
+
+  public void retractBackPiston() {
+    backPiston.set(DoubleSolenoid.Value.kReverse);
   }
 }

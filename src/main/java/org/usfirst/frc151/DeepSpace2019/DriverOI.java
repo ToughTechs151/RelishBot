@@ -18,16 +18,15 @@ public class DriverOI extends OI {
 
     public DriverOI(int channel) {
         super(channel);
-        a = new JoystickButton(joystick, RobotMap.A);
+
         y = new JoystickButton(joystick, RobotMap.Y);
-
-        a.whenPressed(new ExtendPistonCommand());
-        y.whenPressed(new RetractPistonCommand());
-
-        b = new JoystickButton(joystick, RobotMap.B);
-        b.whileHeld(new DriveToTargetPIDCommand(Robot.DRIVE_KP, Robot.DRIVE_KI, Robot.DRIVE_KD));
-
+        y.whileHeld(new ExtendBackPistonCommand());
         x = new JoystickButton(joystick, RobotMap.X);
-        x.whenPressed(new SetLEDCommand(Relay.Value.kReverse));
+        x.whileHeld(new ExtendFrontPistonCommand());
+
+        b = new JoystickButton(joystick, RobotMap.B); //once you're lined up reasonably straight
+        b.whileHeld(new DriveToTargetPIDCommand(Robot.DRIVE_KP, Robot.DRIVE_KI, Robot.DRIVE_KD, Robot.DRIVE_BASE_SPEED));
+        a = new JoystickButton(joystick, RobotMap.A);
+        a.whileHeld(new DriveStraightCommand());
     }
 }

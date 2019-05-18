@@ -29,7 +29,6 @@ public class CargoArmPIDSubsystem extends PIDSubsystem {
   private WPI_TalonSRX cargoArm = null;
   
   public static double lastManualPos = 95;
-
   
   static double[][] manualPowerTable = {
     //pot position, max power going towards hatch, max power going towards bumper

@@ -111,6 +111,12 @@ public class ChassisSubsystem extends Subsystem {
         driveTrain.arcadeDrive(throttle, turn, true);
     }
 
+    public void driveStraight(OI oi, int scale) {
+        double rightVal = -getScaledValue(oi.getJoystick().getRawAxis(3), scale, RobotSide.RIGHT);
+        double leftVal = -getScaledValue(oi.getJoystick().getRawAxis(3), scale, RobotSide.LEFT);
+        drive(0.7 * leftVal, 0.7 * rightVal);
+    }
+
     /**
      * Method to drive in tank drive based on joystick input.
      * @param oi The oi to base joystick values off of (Driver or CoDriver.)

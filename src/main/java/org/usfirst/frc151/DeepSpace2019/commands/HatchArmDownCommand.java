@@ -9,6 +9,7 @@ package org.usfirst.frc151.DeepSpace2019.commands;
 
 import org.usfirst.frc151.DeepSpace2019.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Relay;
 
 public class HatchArmDownCommand extends Command {
   public HatchArmDownCommand() {
@@ -24,6 +25,7 @@ public class HatchArmDownCommand extends Command {
   @Override
   protected void execute() {
     Robot.hatchSubsystem.extendArm();
+    Robot.ledSubsystem.setLED(Relay.Value.kReverse);
   }
 
 

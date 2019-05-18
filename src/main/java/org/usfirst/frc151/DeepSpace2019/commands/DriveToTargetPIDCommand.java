@@ -15,11 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveToTargetPIDCommand extends PIDCommand {
   
-  private int[] mostRecentErrors = {3, 3, 3, 3};
+  private int[] mostRecentErrors = {0, 0, 0, 0};
+  private double baseSpeed = 0;
   
-  public DriveToTargetPIDCommand(double p, double i, double d) {
+  public DriveToTargetPIDCommand(double p, double i, double d, double baseSpeed) {
     super(p, i, d);
     requires(Robot.chassisSubsystem);
+    this.baseSpeed = baseSpeed;
     setSetpoint(0);
     getPIDController().setAbsoluteTolerance(2);
   }
@@ -28,7 +30,9 @@ public class DriveToTargetPIDCommand extends PIDCommand {
   @Override
   protected void initialize() {
     Robot.pixyInUseByCommand = true;
-    Robot.ledSubsystem.setLED(Relay.Value.kReverse);
+    for(int i = 0; i < mostRecentErrors.length; i++) {
+      mostRecentErrors[i] = 0;
+    }
     getPIDController().setSetpoint(0);
     getPIDController().enable();
   }
@@ -37,7 +41,7 @@ public class DriveToTargetPIDCommand extends PIDCommand {
   protected double returnPIDInput() {
     double[] pixyResults = new double[3];
     if(Robot.pixyCam.getCenterCoordinates(pixyResults, (byte) 0x01, 0x02)) {
-      int error = (int) (pixyResults[0] - (158 + pixyResults[2]/2));
+      int error = (int) (pixyResults[0] - (158 - pixyResults[2]/10));
       SmartDashboard.putNumber("Center X", pixyResults[0]);
       SmartDashboard.putNumber("Center Y", pixyResults[1]);
       if(Math.abs(error) < 500) {
@@ -51,8 +55,13 @@ public class DriveToTargetPIDCommand extends PIDCommand {
 
   @Override
   protected void usePIDOutput(double output) {
+    if(output < 0) {
+      Robot.chassisSubsystem.drive(-Math.abs(baseSpeed), -Math.abs(baseSpeed) - output); //WORKS WELL WHEN OUTPUT IS NEGATIVE, so when output is negative, do this. else, add it to left side
+    } else if(output > 0) {
+      Robot.chassisSubsystem.drive(-Math.abs(baseSpeed) + output, -Math.abs(baseSpeed));
+    }
     SmartDashboard.putNumber("PID Output", output);
-    Robot.chassisSubsystem.drive(-0.6, -0.6 - output);
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -66,7 +75,6 @@ public class DriveToTargetPIDCommand extends PIDCommand {
   protected void end() {
     getPIDController().disable();
     Robot.chassisSubsystem.drive(0, 0);
-    Robot.ledSubsystem.setLED(Relay.Value.kOff);
     Robot.pixyInUseByCommand = false;
   }
 
