@@ -14,8 +14,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class HatchSubsystem extends Subsystem {
-
-    private Compressor compressor;
+    
     private DoubleSolenoid hatchArm;
     private DoubleSolenoid beak;
 

@@ -10,6 +10,7 @@ import org.usfirst.frc151.DeepSpace2019.subsystems.*;
 import org.usfirst.frc151.DeepSpace2019.vision.Pixy2Camera;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.cscore.*;
 
 
@@ -23,8 +24,14 @@ public class Robot extends TimedRobot {
     public static PixyPacket[] pixyPacketArr = new PixyPacket[2];
 
     public static final double DRIVE_KP = 0.01;
-    public static final double DRIVE_KI = 0;
-    public static final double DRIVE_KD = 0;
+    public static final double DRIVE_KI = 0.0;
+    public static final double DRIVE_KD = 0.0;
+    public static final double DRIVE_BASE_SPEED = 0.57;
+
+    public static final double TURN_KP = 0.015;
+    public static final double TURN_KI = 0.00015;
+    public static final double TURN_KD = 0.0;
+    public static final double TURN_BASE_SPEED = 0.55;
 
     Command autonomousCommand;
     SendableChooser<Command> chooser = new SendableChooser<>();
@@ -45,7 +52,9 @@ public class Robot extends TimedRobot {
     public static UsbCameraSubsystem cameraSubSystem = null;
 
     public static boolean pixyInUseByCommand;
+<<<<<<< HEAD
     */
+
     @Override
     public void robotInit() {
         chassisSubsystem = new ChassisSubsystem();
@@ -60,8 +69,12 @@ public class Robot extends TimedRobot {
         */
         driverOI = new DriverOI(0);
         coDriverOI = new CoDriverOI(1);
+
         /*
         climberSubsystem.retractPiston();
+        climberSubsystem.retractFrontPiston();
+        climberSubsystem.retractBackPiston();
+
         hatchSubsystem.retractArm();
         hatchSubsystem.openBeak();
 
