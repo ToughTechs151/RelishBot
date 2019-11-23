@@ -38,54 +38,17 @@ public class Robot extends TimedRobot {
 
     public static DriverOI driverOI;
     public static CoDriverOI coDriverOI;
+    //define subsystems
     public static ChassisSubsystem chassisSubsystem;
+    public static HopperSubsystem hopper;
     public static CargoClawSubsystem cargoClawSubsystem;
-    /*public static CargoArmPIDSubsystem cargoArmSubsystem;
-    public static ClimberSubsystem climberSubsystem;
-    public static HatchSubsystem hatchSubsystem;
-    public static Pixy2Camera pixyCam;
-    public static LEDSubsystem ledSubsystem;
-    
-    public static MjpegServer cameraSwitchServer = null;
-    public static UsbCamera hatchCamera = null;
-    public static UsbCamera cargoCamera = null;
-    public static UsbCameraSubsystem cameraSubSystem = null;
-
-    public static boolean pixyInUseByCommand;
-<<<<<<< HEAD
-    */
 
     @Override
     public void robotInit() {
         chassisSubsystem = new ChassisSubsystem();
-        /*
-        cargoClawSubsystem = new CargoClawSubsystem();
-        climberSubsystem = new ClimberSubsystem();
-        hatchSubsystem = new HatchSubsystem();
-        cameraSubSystem = new UsbCameraSubsystem();
-        cargoArmSubsystem = new CargoArmPIDSubsystem();
-        pixyCam = new Pixy2Camera(I2C.Port.kOnboard, 0x54);
-        ledSubsystem = new LEDSubsystem();
-        */
+        hopper = new HopperSubsystem();
         driverOI = new DriverOI(0);
         coDriverOI = new CoDriverOI(1);
-
-        /*
-        climberSubsystem.retractPiston();
-        climberSubsystem.retractFrontPiston();
-        climberSubsystem.retractBackPiston();
-
-        hatchSubsystem.retractArm();
-        hatchSubsystem.openBeak();
-
-        try {
-            hatchCamera = CameraServer.getInstance().startAutomaticCapture("HatchCam", 0);
-            cargoCamera = CameraServer.getInstance().startAutomaticCapture("CargoCam", 1);
-            cameraSwitchServer = CameraServer.getInstance().addSwitchedCamera("switchCam");
-          } catch (Exception e) {
-            System.out.println(e.getMessage());
-          }
-          */
     }
     /**
      * This function is called when the disabled button is hit.

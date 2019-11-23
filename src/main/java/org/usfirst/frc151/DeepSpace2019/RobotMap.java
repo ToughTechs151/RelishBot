@@ -20,20 +20,6 @@ public class RobotMap {
     public static final int FRONT_LEFT = 3;
     public static final int BACK_LEFT = 2;
 
-    //CAN IDs
-    public static final int CARGO_RIGHT = 2;
-    public static final int CARGO_LEFT = 3;
-
-    //PCM PORTS
-    public static final int ARM_SOLENOID_PORT_STOW = 2;
-    public static final int ARM_SOLENOID_PORT_DEPLOY = 3;
-    public static final int BEAK_SOLENOID_PORT_CLOSE = 1;
-    public static final int BEAK_SOLENOID_PORT_OPEN = 0;
-    public static final int FRONT_CLIMBER_FORWARD = 4;
-    public static final int FRONT_CLIMBER_REVERSE = 5;
-    public static final int BACK_CLIMBER_FORWARD = 6;
-    public static final int BACK_CLIMBER_REVERSE = 7;
-
     //OI AXES
     public static final int LEFT_JOYSTICK_X = 0;
 	public static final int LEFT_JOYSTICK_Y = 1;
@@ -41,6 +27,7 @@ public class RobotMap {
 	public static final int RIGHT_JOYSTICK_Y = 5;
     public static final int LEFT_TRIGGER = 2;
     public static final int RIGHT_TRIGGER = 3;
+    public static final int RIGHT_JOYSTICK_VERTICAL_AXIS = 5;
 
     //OI BUTTON PORTS
 	public static final int A = 1;
@@ -53,4 +40,8 @@ public class RobotMap {
 	public static final int START = 8;
 	public static final int LEFT_JOYSTICK = 9;
     public static final int RIGHT_JOYSTICK = 10;
+
+    //hoppper
+    public static final int HOPPER_SWITCH = 0;
+    public static final int HOPPER_MOTOR = 0;
 }
