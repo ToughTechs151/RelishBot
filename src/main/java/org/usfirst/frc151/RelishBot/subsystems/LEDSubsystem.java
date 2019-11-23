@@ -5,9 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019.subsystems;
+package org.usfirst.frc151.RelishBot.subsystems;
 
-import org.usfirst.frc151.DeepSpace2019.RobotMap;
+import org.usfirst.frc151.RelishBot.RobotMap;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 

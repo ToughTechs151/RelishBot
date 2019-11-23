@@ -4,19 +4,17 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
-package org.usfirst.frc151.DeepSpace2019.commands;
+package org.usfirst.frc151.RelishBot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class ReleaseBallThroughCartridgeCommandGroup extends CommandGroup {
+public class ReleaseBallPerSecondThroughHopperCommandGroup extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ReleaseBallThroughCartridgeCommandGroup() {
-    addSequential(new RetractCommand());
+  public ReleaseBallPerSecondThroughHopperCommandGroup() {
+    addSequential(new IncrementHopperCommand(0.35));
     addSequential(new WaitCommand(0.15));
-    addSequential(new ExtendCommand());
   }
 }

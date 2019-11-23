@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019.subsystems;
+package org.usfirst.frc151.RelishBot.subsystems;
 
 import java.util.Random;
 
@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc151.DeepSpace2019.RobotMap;
+import org.usfirst.frc151.RelishBot.RobotMap;
 
 /**
  * Add your docs here.

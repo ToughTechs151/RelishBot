@@ -5,14 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019.subsystems;
+package org.usfirst.frc151.RelishBot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc151.DeepSpace2019.OI;
-import org.usfirst.frc151.DeepSpace2019.RobotMap;
+import org.usfirst.frc151.RelishBot.OI;
+import org.usfirst.frc151.RelishBot.RobotMap;
 
 /**
  * Add your docs here.

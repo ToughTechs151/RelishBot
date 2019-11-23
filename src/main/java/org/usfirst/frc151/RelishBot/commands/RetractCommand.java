@@ -5,22 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
-package org.usfirst.frc151.DeepSpace2019.commands;
-
-import org.usfirst.frc151.DeepSpace2019.Robot;
+package org.usfirst.frc151.RelishBot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc151.RelishBot.Robot;
 
-public class ChangeLauncherSpeedCommand extends Command {
 
-  private double setpoint;
-  private boolean isFinished;
-
-  public ChangeLauncherSpeedCommand(double setpoint) {
+public class RetractCommand extends Command {
+  
+  private boolean isFinished = false;
+  
+  public RetractCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    this.setpoint = setpoint;
+    requires(Robot.cartridgePiston);
   }
 
   // Called just before this Command runs the first time
@@ -31,8 +29,7 @@ public class ChangeLauncherSpeedCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.launcherPIDSubsystem.setSetpoint(setpoint);
-    Robot.launcherPIDSubsystem.enable();
+    Robot.cartridgePiston.retract();
     isFinished = true;
   }
 

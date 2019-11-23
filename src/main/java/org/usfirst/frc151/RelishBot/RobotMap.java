@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019;
+package org.usfirst.frc151.RelishBot;
 
 /**
  * Add your docs here.

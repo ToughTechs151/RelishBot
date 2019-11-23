@@ -5,13 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019.commands;
+package org.usfirst.frc151.RelishBot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.Timer;
 import java.util.TimerTask;
-import org.usfirst.frc151.DeepSpace2019.Robot;
+import org.usfirst.frc151.RelishBot.Robot;
 public class IncrementHopperCommand extends Command {
 
   Timer timer;

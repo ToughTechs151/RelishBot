@@ -5,20 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019.commands;
+package org.usfirst.frc151.RelishBot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc151.DeepSpace2019.Robot;
+import org.usfirst.frc151.RelishBot.Robot;
 
-
-public class RetractCommand extends Command {
-  
+public class ExtendCommand extends Command {
+ 
   private boolean isFinished = false;
   
-  public RetractCommand() {
+  public ExtendCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.cartridgePiston);
+    
   }
 
   // Called just before this Command runs the first time
@@ -29,7 +29,7 @@ public class RetractCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cartridgePiston.retract();
+    Robot.cartridgePiston.extend();
     isFinished = true;
   }
 

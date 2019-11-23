@@ -5,9 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019;
+package org.usfirst.frc151.RelishBot;
 
-import org.usfirst.frc151.DeepSpace2019.commands.*;
+import org.usfirst.frc151.RelishBot.commands.*;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 

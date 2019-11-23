@@ -5,14 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019.commands;
 
-import org.usfirst.frc151.DeepSpace2019.Robot;
+package org.usfirst.frc151.RelishBot.commands;
+
+import org.usfirst.frc151.RelishBot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveWithJoysticksCommand extends Command {
-  public DriveWithJoysticksCommand() {
-    requires(Robot.chassisSubsystem);
+public class ChangeLauncherSpeedCommand extends Command {
+
+  private double setpoint;
+  private boolean isFinished;
+
+  public ChangeLauncherSpeedCommand(double setpoint) {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    this.setpoint = setpoint;
   }
 
   // Called just before this Command runs the first time
@@ -23,13 +31,15 @@ public class DriveWithJoysticksCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.chassisSubsystem.drive(Robot.driverOI, Robot.SCALED_DRIVE);
+    Robot.launcherPIDSubsystem.setSetpoint(setpoint);
+    Robot.launcherPIDSubsystem.enable();
+    isFinished = true;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return isFinished;
   }
 
   // Called once after isFinished returns true

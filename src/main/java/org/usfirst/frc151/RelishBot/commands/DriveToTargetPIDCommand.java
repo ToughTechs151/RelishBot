@@ -5,9 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019.commands;
+package org.usfirst.frc151.RelishBot.commands;
 
-import org.usfirst.frc151.DeepSpace2019.Robot;
+import org.usfirst.frc151.RelishBot.Robot;
 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.PIDCommand;

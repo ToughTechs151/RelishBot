@@ -1,13 +1,13 @@
-package org.usfirst.frc151.DeepSpace2019;
+package org.usfirst.frc151.RelishBot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc151.DeepSpace2019.vision.PixyPacket;
-import org.usfirst.frc151.DeepSpace2019.subsystems.*;
-import org.usfirst.frc151.DeepSpace2019.vision.Pixy2Camera;
+import org.usfirst.frc151.RelishBot.vision.PixyPacket;
+import org.usfirst.frc151.RelishBot.subsystems.*;
+import org.usfirst.frc151.RelishBot.vision.Pixy2Camera;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Relay;

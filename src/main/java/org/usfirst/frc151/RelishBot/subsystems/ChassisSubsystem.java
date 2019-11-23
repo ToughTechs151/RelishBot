@@ -5,11 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc151.DeepSpace2019.subsystems;
+package org.usfirst.frc151.RelishBot.subsystems;
 
-import org.usfirst.frc151.DeepSpace2019.OI;
-import org.usfirst.frc151.DeepSpace2019.RobotMap;
-import org.usfirst.frc151.DeepSpace2019.commands.DriveWithJoysticksCommand;
+import org.usfirst.frc151.RelishBot.OI;
+import org.usfirst.frc151.RelishBot.RobotMap;
+import org.usfirst.frc151.RelishBot.commands.DriveWithJoysticksCommand;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
