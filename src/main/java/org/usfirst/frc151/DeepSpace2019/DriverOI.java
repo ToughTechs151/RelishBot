@@ -21,13 +21,13 @@ public class DriverOI extends OI {
         a = new JoystickButton(joystick, RobotMap.A);
         y = new JoystickButton(joystick, RobotMap.Y);
 
-        a.whenPressed(new ExtendPistonCommand());
-        y.whenPressed(new RetractPistonCommand());
+        //a.whenPressed(new ExtendPistonCommand());
+       // y.whenPressed(new RetractPistonCommand());
 
         b = new JoystickButton(joystick, RobotMap.B);
-        b.whileHeld(new DriveToTargetPIDCommand(Robot.DRIVE_KP, Robot.DRIVE_KI, Robot.DRIVE_KD));
+        //b.whileHeld(new DriveToTargetPIDCommand(Robot.DRIVE_KP, Robot.DRIVE_KI, Robot.DRIVE_KD));
 
         x = new JoystickButton(joystick, RobotMap.X);
-        x.whenPressed(new SetLEDCommand(Relay.Value.kReverse));
+       // x.whenPressed(new SetLEDCommand(Relay.Value.kReverse));
     }
 }

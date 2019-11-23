@@ -15,10 +15,10 @@ public class RobotMap {
     public static final int LED_RELAY = 0;
     
     //PWM PORTS
-    public static final int FRONT_RIGHT = 1;
-    public static final int BACK_RIGHT = 2;
+    public static final int FRONT_RIGHT = 6;
+    public static final int BACK_RIGHT = 4;
     public static final int FRONT_LEFT = 3;
-    public static final int BACK_LEFT = 4;
+    public static final int BACK_LEFT = 2;
 
     //CAN IDs
     public static final int CARGO_RIGHT = 2;

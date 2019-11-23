@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
     public static CoDriverOI coDriverOI;
     public static ChassisSubsystem chassisSubsystem;
     public static CargoClawSubsystem cargoClawSubsystem;
-    public static CargoArmPIDSubsystem cargoArmSubsystem;
+    /*public static CargoArmPIDSubsystem cargoArmSubsystem;
     public static ClimberSubsystem climberSubsystem;
     public static HatchSubsystem hatchSubsystem;
     public static Pixy2Camera pixyCam;
@@ -45,9 +45,11 @@ public class Robot extends TimedRobot {
     public static UsbCameraSubsystem cameraSubSystem = null;
 
     public static boolean pixyInUseByCommand;
+    */
     @Override
     public void robotInit() {
         chassisSubsystem = new ChassisSubsystem();
+        /*
         cargoClawSubsystem = new CargoClawSubsystem();
         climberSubsystem = new ClimberSubsystem();
         hatchSubsystem = new HatchSubsystem();
@@ -55,10 +57,10 @@ public class Robot extends TimedRobot {
         cargoArmSubsystem = new CargoArmPIDSubsystem();
         pixyCam = new Pixy2Camera(I2C.Port.kOnboard, 0x54);
         ledSubsystem = new LEDSubsystem();
-
+        */
         driverOI = new DriverOI(0);
         coDriverOI = new CoDriverOI(1);
-
+        /*
         climberSubsystem.retractPiston();
         hatchSubsystem.retractArm();
         hatchSubsystem.openBeak();
@@ -70,8 +72,8 @@ public class Robot extends TimedRobot {
           } catch (Exception e) {
             System.out.println(e.getMessage());
           }
+          */
     }
-
     /**
      * This function is called when the disabled button is hit.
      * You can use it to reset subsystems before shutting down.
@@ -115,9 +117,11 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        /*
         if(!pixyInUseByCommand) {
             pixyCam.getBlocks(pixyPacketArr, (byte) 0x01, 0x02);
         }
+        */
         Scheduler.getInstance().run();
     }
 }
