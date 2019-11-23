@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
     //define subsystems
     public static ChassisSubsystem chassisSubsystem;
     public static HopperSubsystem hopper;
-    public static CargoClawSubsystem cargoClawSubsystem;
+    public static final LauncherPIDSubsystem launcherPIDSubsystem = new LauncherPIDSubsystem();
 
     @Override
     public void robotInit() {

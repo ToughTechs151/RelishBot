@@ -41,7 +41,18 @@ public class RobotMap {
 	public static final int LEFT_JOYSTICK = 9;
     public static final int RIGHT_JOYSTICK = 10;
 
-    //hoppper
+    //hopper
     public static final int HOPPER_SWITCH = 0;
     public static final int HOPPER_MOTOR = 0;
+
+    //launcher
+    public static final int LAUNCHER_MOTOR = 7;
+	public static final int LAUNCHER_ENCODER_A = 1;
+	public static final int LAUNCHER_ENCODER_B = 2;
+
+
+    //PID CONSTANTS
+	public static final double kPl = 0.001;
+	public static final double kIl = 0.0001;
+	public static final double kDl = 0;
 }
