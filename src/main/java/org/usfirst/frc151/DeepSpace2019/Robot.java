@@ -42,7 +42,8 @@ public class Robot extends TimedRobot {
     public static ChassisSubsystem chassisSubsystem;
     public static HopperSubsystem hopper;
     public static final LauncherPIDSubsystem launcherPIDSubsystem = new LauncherPIDSubsystem();
-
+    public static CartridgeSubsystem cartridgePiston = new CartridgeSubsystem();
+  
     @Override
     public void robotInit() {
         chassisSubsystem = new ChassisSubsystem();
