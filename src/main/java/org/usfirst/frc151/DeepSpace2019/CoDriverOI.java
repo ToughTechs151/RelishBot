@@ -27,25 +27,14 @@ public class CoDriverOI extends OI {
         leftBumper = new JoystickButton(joystick, RobotMap.LEFT_BUMPER);
         rightBumper = new JoystickButton(joystick, RobotMap.RIGHT_BUMPER);
 
-        //leftBumper.whenPressed(new OpenBeakCommand());
-        //rightBumper.whenPressed(new CloseBeakCommand());
-        //start.whenPressed(new HatchArmDownCommand());
-        //back.whenPressed(new HatchArmUpCommand());
-
         a = new JoystickButton(joystick, RobotMap.A);
+        a.whenPressed(new ChangeLauncherSpeedCommand(-2300));
+
         b = new JoystickButton(joystick, RobotMap.B);
         y = new JoystickButton(joystick, RobotMap.Y);
         x = new JoystickButton(joystick, RobotMap.X);
-        /*
-        a.whenPressed(new ChangeCargoArmSetpointCommand(90));
-		b.whenPressed(new ChangeCargoArmSetpointCommand(185));
-		y.whenPressed(new ChangeCargoArmSetpointCommand(310));
-        x.whenPressed(new ChangeCargoArmSetpointCommand(500));
-        */
+    
         leftJoystick = new JoystickButton(joystick, RobotMap.LEFT_JOYSTICK);
         rightJoystick = new JoystickButton(joystick, RobotMap.RIGHT_JOYSTICK);
-    
-        //leftJoystick.whenPressed(new EnableManualCargoArmControlCommandGroup());
-       //rightJoystick.whenPressed(new EnableCargoArmPIDControlCommand());
     }
 }

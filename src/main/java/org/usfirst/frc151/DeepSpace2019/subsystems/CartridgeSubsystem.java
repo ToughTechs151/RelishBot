@@ -7,8 +7,8 @@
 
 package org.usfirst.frc151.DeepSpace2019.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
+//import edu.wpi.first.wpilibj.DoubleSolenoid;
+//import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class CartridgeSubsystem extends Subsystem {
 
-  private Solenoid cartridgeSolenoid;
+  //private Solenoid cartridgeSolenoid;
 
   @Override
   public void initDefaultCommand() {
@@ -24,15 +24,15 @@ public class CartridgeSubsystem extends Subsystem {
   }
 
   public CartridgeSubsystem() {
-    cartridgeSolenoid = new Solenoid(0);
+    //cartridgeSolenoid = new Solenoid(0);
   }
 
   public void extend() {
-    cartridgeSolenoid.set(false);
+    //cartridgeSolenoid.set(false);
   }
 
   public void retract() {
-    cartridgeSolenoid.set(true);
+    //cartridgeSolenoid.set(true);
   }
 
   // public void off() {
